@@ -1,4 +1,4 @@
 ﻿  Fuerza_Bruta.c
-Fuerza_Bruta.c(915,1): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
-Fuerza_Bruta.c(1082,28): warning C4244: 'inicializando': conversión de '__int64' a 'int'; posible pérdida de datos
-  CompilaFuerzaBruta.vcxproj -> C:\Users\javav\OneDrive\Escritorio\FuerzaBruta\CompilaFuerzaBruta\x64\Debug\CompilaFuerzaBruta.exe
+Fuerza_Bruta.c(949,1): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+Fuerza_Bruta.c(1116,28): warning C4244: 'inicializando': conversión de '__int64' a 'int'; posible pérdida de datos
+  CompilaFuerzaBruta.vcxproj -> C:\Users\javav\OneDrive\Escritorio\top_down_fuerza_bruta\CompilaFuerzaBruta\x64\Debug\CompilaFuerzaBruta.exe

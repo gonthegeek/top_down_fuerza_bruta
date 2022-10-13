@@ -16,12 +16,30 @@
 #define MAX_INCLUDE_DEPTH 10
 
 
+
 // variable globaless
 int include_stack_ptr = 0;
 unsigned int nivel_de_includes = 0;
 char directorio[MAX_LONGITUD]="";
 char archivo_de_entrada[MAX_LONGITUD]="";
 char archivo_a_abrir[MAX_LONGITUD]="";
+char t[MAX_LONGITUD]="";
+int n = 0;
+char state;
+unsigned int i = 0;
+char p_symb[MAX_LONGITUD] = "";
+char symb[MAX_LONGITUD] = ""; 
+char *t_hist;
+char hist[MAX_LONGITUD] = "";
+char sent[MAX_LONGITUD]= "";
+char nt[MAX_LONGITUD][1] = {"",'#'};
+unsigned int p_hist[MAX_LONGITUD]; 
+char gramatica[MAX_LONGITUD][MAX_LONGITUD]; //vN, regla
+/*Posibles variables locales
+unsigned int *p[MAX_LONGITUD]; 
+char *s[MAX_LONGITUD];
+char *t[MAX_LONGITUD];
+unsigned int case;*/
 
 //Definicion de variable de flex
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH]; /* PILA para archivos */
@@ -34,19 +52,16 @@ YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH]; /* PILA para archivos */
 
 TERMINAL            [+*()a]+
 NO_TERMINAL         [ETKFR]
+REGLA				{NO_TERMINAL}[" "]{NO_TERMINAL}*{TERMINAL}*{NO_TERMINAL}*{TERMINAL}*
+
+%x ANALIZADOR
 
 %%
 
 
-{TERMINAL} {
-		//funcion al encontrar el token NOMBRE
-        printf("Terminal: %s \n", yytext);
-	  }
-
-{NO_TERMINAL} {
-		//funcion al encontrar el token NOMBRE
-        printf("No terminal: %s \n", yytext);
-	  }
+{REGLA} {
+		printf("Regla: %s \n", yytext);
+	}
 
 <<EOF>> { /* Si se detecta el fin de archivo se retorna */
 		if ( --include_stack_ptr < 0 )
@@ -57,10 +72,21 @@ NO_TERMINAL         [ETKFR]
 			yy_switch_to_buffer( include_stack[include_stack_ptr] );
 			printf("Cerrando el archivo %s\n",archivo_a_abrir );
 		}
+		BEGIN(ANALIZADOR);
 	}
+<ANALIZADOR>{TERMINAL} {
+		//funcion al encontrar el token NOMBRE
+        printf("Terminal: %s \n", yytext);
+	  }
+
+<ANALIZADOR>{NO_TERMINAL} {
+		//funcion al encontrar el token NOMBRE
+        printf("No terminal: %s \n", yytext);
+	  }
 
 ","
-.       printf("Caracter invalido %s\n",yytext);      
+.       printf("Caracter invalido %s \n",yytext);  
+
 %%
 
 int main( int argc, char* argv[] )
@@ -86,6 +112,8 @@ int main( int argc, char* argv[] )
 		printf("Este programa solo lee de un archivo no puede leer de una entrada de teclado");
 		return(1);
 	}
+
 	yylex();
+	printf("hola");
 	return(0);
 }

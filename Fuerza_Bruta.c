@@ -286,11 +286,12 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 5
-#define YY_END_OF_BUFFER 6
-static yyconst short int yy_accept[11] =
+#define YY_NUM_RULES 6
+#define YY_END_OF_BUFFER 7
+static yyconst short int yy_accept[19] =
     {   0,
-        0,    0,    6,    4,    5,    1,    3,    2,    1,    0
+        0,    0,    0,    0,    7,    5,    6,    4,    5,    2,
+        3,    1,    2,    1,    1,    1,    1,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -298,13 +299,13 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    3,
-        3,    3,    3,    4,    1,    1,    1,    1,    1,    1,
+        1,    3,    1,    3,    1,    1,    1,    1,    1,    4,
+        4,    4,    4,    5,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    5,    5,
-        1,    1,    1,    1,    5,    1,    1,    1,    1,    1,
-        1,    5,    1,    5,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    3,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    6,    6,
+        1,    1,    1,    1,    6,    1,    1,    1,    1,    1,
+        1,    6,    1,    6,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    4,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -325,33 +326,37 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst int yy_meta[6] =
+static yyconst int yy_meta[7] =
     {   0,
-        1,    1,    2,    1,    1
+        1,    1,    2,    3,    1,    1
     } ;
 
-static yyconst short int yy_base[12] =
+static yyconst short int yy_base[23] =
     {   0,
-        0,    0,    7,    8,    8,    0,    8,    8,    0,    8,
-        4
+        0,    0,    3,    6,   21,   22,   22,   22,    0,    0,
+       22,    9,    0,   14,    0,   15,    0,   22,   15,   12,
+        8,    5
     } ;
 
-static yyconst short int yy_def[12] =
+static yyconst short int yy_def[23] =
     {   0,
-       10,    1,   10,   10,   10,   11,   10,   10,   11,    0,
-       10
+       18,    1,   19,   19,   18,   18,   18,   18,   20,   21,
+       18,   18,   21,   12,   12,   14,   22,    0,   18,   18,
+       18,   18
     } ;
 
-static yyconst short int yy_nxt[14] =
+static yyconst short int yy_nxt[29] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,    3,   10,   10,
-       10,   10,   10
+        6,    7,    6,    6,    8,    9,   10,   17,   11,   10,
+       13,   11,   14,   12,   15,    7,    7,    7,   17,   16,
+       18,    5,   18,   18,   18,   18,   18,   18
     } ;
 
-static yyconst short int yy_chk[14] =
+static yyconst short int yy_chk[29] =
     {   0,
-        1,    1,    1,    1,    1,   11,    3,   10,   10,   10,
-       10,   10,   10
+        1,    1,    1,    1,    1,    1,    3,   22,    3,    4,
+       21,    4,   12,   20,   12,   19,   19,   19,   16,   14,
+        5,   18,   18,   18,   18,   18,   18,   18
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -385,17 +390,37 @@ char *yytext;
 #define MAX_INCLUDE_DEPTH 10
 
 
+
 // variable globaless
 int include_stack_ptr = 0;
 unsigned int nivel_de_includes = 0;
 char directorio[MAX_LONGITUD]="";
 char archivo_de_entrada[MAX_LONGITUD]="";
 char archivo_a_abrir[MAX_LONGITUD]="";
+char t[MAX_LONGITUD]="";
+int n = 0;
+char state;
+unsigned int i = 0;
+char p_symb[MAX_LONGITUD] = "";
+char symb[MAX_LONGITUD] = ""; 
+char *t_hist;
+char hist[MAX_LONGITUD] = "";
+char sent[MAX_LONGITUD]= "";
+char nt[MAX_LONGITUD][1] = {"",'#'};
+unsigned int p_hist[MAX_LONGITUD]; 
+char gramatica[MAX_LONGITUD][MAX_LONGITUD]; //vN, regla
+/*Posibles variables locales
+unsigned int *p[MAX_LONGITUD]; 
+char *s[MAX_LONGITUD];
+char *t[MAX_LONGITUD];
+unsigned int case;*/
 
 //Definicion de variable de flex
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH]; /* PILA para archivos */
 
-#line 399 "Fuerza_Bruta.c"
+#define ANALIZADOR 1
+
+#line 424 "Fuerza_Bruta.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -546,11 +571,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 38 ".\\FuerzaBruta.lex"
+#line 59 ".\\FuerzaBruta.lex"
 
 
 
-#line 554 "Fuerza_Bruta.c"
+#line 579 "Fuerza_Bruta.c"
 
 	if ( yy_init )
 		{
@@ -601,13 +626,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 11 )
+				if ( yy_current_state >= 19 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 8 );
+		while ( yy_base[yy_current_state] != 22 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -635,22 +660,14 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 41 ".\\FuerzaBruta.lex"
+#line 62 ".\\FuerzaBruta.lex"
 {
-		//funcion al encontrar el token NOMBRE
-        printf("Terminal: %s \n", yytext);
-	  }
-	YY_BREAK
-case 2:
-YY_RULE_SETUP
-#line 46 ".\\FuerzaBruta.lex"
-{
-		//funcion al encontrar el token NOMBRE
-        printf("No terminal: %s \n", yytext);
-	  }
+		printf("Regla: %s \n", yytext);
+	}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 51 ".\\FuerzaBruta.lex"
+case YY_STATE_EOF(ANALIZADOR):
+#line 66 ".\\FuerzaBruta.lex"
 { /* Si se detecta el fin de archivo se retorna */
 		if ( --include_stack_ptr < 0 )
 		    yyterminate();
@@ -660,24 +677,41 @@ case YY_STATE_EOF(INITIAL):
 			yy_switch_to_buffer( include_stack[include_stack_ptr] );
 			printf("Cerrando el archivo %s\n",archivo_a_abrir );
 		}
+		BEGIN(ANALIZADOR);
 	}
+	YY_BREAK
+case 2:
+YY_RULE_SETUP
+#line 77 ".\\FuerzaBruta.lex"
+{
+		//funcion al encontrar el token NOMBRE
+        printf("Terminal: %s \n", yytext);
+	  }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 62 ".\\FuerzaBruta.lex"
-
+#line 82 ".\\FuerzaBruta.lex"
+{
+		//funcion al encontrar el token NOMBRE
+        printf("No terminal: %s \n", yytext);
+	  }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 63 ".\\FuerzaBruta.lex"
-printf("Caracter invalido %s\n",yytext);      
+#line 87 ".\\FuerzaBruta.lex"
+
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 64 ".\\FuerzaBruta.lex"
+#line 88 ".\\FuerzaBruta.lex"
+printf("Caracter invalido %s \n",yytext);  
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 90 ".\\FuerzaBruta.lex"
 ECHO;
 	YY_BREAK
-#line 681 "Fuerza_Bruta.c"
+#line 715 "Fuerza_Bruta.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -967,7 +1001,7 @@ static yy_state_type yy_get_previous_state()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 11 )
+			if ( yy_current_state >= 19 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1002,11 +1036,11 @@ yy_state_type yy_current_state;
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 11 )
+		if ( yy_current_state >= 19 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 10);
+	yy_is_jam = (yy_current_state == 18);
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -1561,7 +1595,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 64 ".\\FuerzaBruta.lex"
+#line 90 ".\\FuerzaBruta.lex"
 
 
 int main( int argc, char* argv[] )
@@ -1587,6 +1621,8 @@ int main( int argc, char* argv[] )
 		printf("Este programa solo lee de un archivo no puede leer de una entrada de teclado");
 		return(1);
 	}
+
 	yylex();
+	printf("hola");
 	return(0);
 }
